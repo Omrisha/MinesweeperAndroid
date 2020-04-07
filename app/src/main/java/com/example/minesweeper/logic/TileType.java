@@ -6,5 +6,9 @@ public enum TileType {
     ONE,
     TWO,
     THREE,
-    FOUR
+    FOUR,
+    FIVE,
+    SIX,
+    SEVEN,
+    EIGHT
 }
