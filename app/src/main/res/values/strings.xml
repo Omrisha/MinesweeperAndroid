@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Minesweeper</string>
+    <string name="Choose_Beginner">Beginner</string>
+    <string name="Choose_Intermediate">Intermediate</string>
+    <string name="Choose_Expert">Expert</string>
+    <string name="textChoose">Choose difficulty:</string>
+    <string name="but_start">start game</string>
+    <string name="you_won">you won!</string>
+    <string name="you_lost">you lost</string>
+    <string name="but_playAgain">play again</string>
+    <string name="but_exit">exit</string>
 </resources>
+
+
