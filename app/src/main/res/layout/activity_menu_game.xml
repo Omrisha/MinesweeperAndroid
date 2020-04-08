@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MenuGame">
     <ImageView
-        android:src="@drawable/Background_pic"
+        android:src="@drawable/background_pic"
         android:id="@+id/im1"
         android:scaleType="fitXY"
         android:layout_height="match_parent"
