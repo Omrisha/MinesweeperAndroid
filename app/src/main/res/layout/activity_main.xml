@@ -14,8 +14,15 @@
         android:paddingLeft="15dp"
         android:paddingBottom="50dp"
         android:paddingRight="15dp"
-        android:layout_marginTop="200dp">
+        android:layout_marginTop="100dp">
 
+        <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginBottom="25dp"
+        android:textSize="26sp"
+        android:id="@+id/gameTimer"/>
 
         <GridView
             android:id="@+id/gridView"
