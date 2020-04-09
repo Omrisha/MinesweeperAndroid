@@ -1,7 +1,16 @@
 package com.example.minesweeper.logic;
 
+import android.os.Build;
+
+import androidx.annotation.WorkerThread;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Collectors;
 
 public class Board {
     private Tile[] mTiles;
@@ -29,23 +38,49 @@ public class Board {
     }
 
     public Boolean playTile(int index) {
-        this.mTiles[index].setmIsRevealed(true);
+        Tile tile = chooseTile(index);
+        tile.setmIsRevealed(true);
 
-        if(!this.mTiles[index].getmType().equals(TileType.MINE)) {
+        if(!tile.getmType().equals(TileType.MINE)) {
             this.mRevealedCells++;
             int mineCount = this.getNeighbourMineCount(index);
             if(mineCount == 0) {
-                this.mTiles[index].setmType(TileType.EMPTY);
+                tile.setmType(TileType.EMPTY);
+                List<Tile> neighbors = getNeighbourCells(index);
+                for(int i = 0; i < neighbors.size(); i++) {
+                    Tile neighbor = neighbors.get(i);
+                    if(!neighbor.getmIsRevealed()) {
+                        playTile(neighbor);
+                        break;
+                    }
+                }
+            } else {
+                setTileTypeAccordingToMine(index, mineCount);
+            }
+        }
+        return tile.getmType().equals(TileType.MINE) ? true : false;
+    }
+
+    public Boolean playTile(Tile tile) {
+        int index = find(this.mTiles, tile);
+        tile.setmIsRevealed(true);
+
+        if(!tile.getmType().equals(TileType.MINE)) {
+            this.mRevealedCells++;
+            int mineCount = this.getNeighbourMineCount(index);
+            if(mineCount == 0) {
+                tile.setmType(TileType.EMPTY);
                 List<Tile> neighbors = getNeighbourCells(index);
                 for(int i = 0; i < neighbors.size(); i++) {
                     if(!neighbors.get(i).getmIsRevealed()) {
-                        playTile(i);
+                        playTile(tile);
                     }
                 }
+            } else {
+                setTileTypeAccordingToMine(index, mineCount);
             }
-            setTileTypeAccordingToMine(index, mineCount);
         }
-        return this.mTiles[index].getmType().equals(TileType.MINE) ? true : false;
+        return tile.getmType().equals(TileType.MINE) ? true : false;
     }
 
     public void setTileTypeAccordingToMine(int index, int mineCount) {
@@ -149,10 +184,20 @@ public class Board {
     }
 
     private boolean inRange(final int index) {
-        if (index < 0 || index > getCount()) {
+        if (index < 0 || index >= getCount()) {
             return false;
         } else {
             return this.mTiles[index] != null;
         }
+    }
+
+    // Generic function to find the index of an element in an object array in Java
+    public static<T> int find(T[] a, T target)
+    {
+        for (int i = 0; i < a.length; i++)
+            if (target.equals(a[i]))
+                return i;
+
+        return -1;
     }
 }
