@@ -56,39 +56,38 @@ public class MainActivity extends AppCompatActivity {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!mGame.getmBoard().isGameOver()) {
-                    Thread t = new Thread(new Runnable() {
-                        Boolean isMine = false;
-                        @Override
-                        public void run() {
-                            Boolean isFlagged = mGame.getmBoard().chooseTile(position).getmIsFlagged();
-                            if (!isFlagged) {
-                                isMine = mGame.getmBoard().playTile(position);
+                Thread t = new Thread(new Runnable() {
+                    Boolean isMine = false;
+                    @Override
+                    public void run() {
+                        Boolean isFlagged = mGame.getmBoard().chooseTile(position).getmIsFlagged();
+                        if (!isFlagged) {
+                            isMine = mGame.getmBoard().playTile(position);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mTileAdapter.notifyDataSetChanged();
+                                }
+                            });
+
+                            if (isMine) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        mTileAdapter.notifyDataSetChanged();
+                                        goToEndActivity("You Lost!");
                                     }
                                 });
-
-                                if (isMine) {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            goToEndActivity("You Lost!");
-                                        }
-                                    });
-                                }
-                            } else {
-                                showAlertWindow("Illegal move", "You chose a flagged tile, please unflag it before choosing it.");
                             }
+                        } else {
+                            showAlertWindow("Illegal move", "You chose a flagged tile, please unflag it before choosing it.");
                         }
-                    });
+                        if (mGame.getmBoard().isGameOver()) {
+                            goToEndActivity("You Win!");
+                        }
+                    }
+                });
 
-                    t.start();
-                } else {
-                    goToEndActivity("You Win!");
-                }
+                t.start();
             }
         });
 
