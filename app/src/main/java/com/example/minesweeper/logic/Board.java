@@ -48,32 +48,9 @@ public class Board {
                 tile.setmType(TileType.EMPTY);
                 List<Tile> neighbors = getNeighbourCells(index);
                 for(int i = 0; i < neighbors.size(); i++) {
-                    Tile neighbor = neighbors.get(i);
-                    if(!neighbor.getmIsRevealed()) {
-                        playTile(neighbor);
-                        break;
-                    }
-                }
-            } else {
-                setTileTypeAccordingToMine(index, mineCount);
-            }
-        }
-        return tile.getmType().equals(TileType.MINE) ? true : false;
-    }
-
-    public Boolean playTile(Tile tile) {
-        int index = find(this.mTiles, tile);
-        tile.setmIsRevealed(true);
-
-        if(!tile.getmType().equals(TileType.MINE)) {
-            this.mRevealedCells++;
-            int mineCount = this.getNeighbourMineCount(index);
-            if(mineCount == 0) {
-                tile.setmType(TileType.EMPTY);
-                List<Tile> neighbors = getNeighbourCells(index);
-                for(int i = 0; i < neighbors.size(); i++) {
+                    int neighborIndex = find(this.mTiles, neighbors.get(i));
                     if(!neighbors.get(i).getmIsRevealed()) {
-                        playTile(tile);
+                        playTile(neighborIndex);
                     }
                 }
             } else {
