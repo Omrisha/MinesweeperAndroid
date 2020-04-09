@@ -16,13 +16,13 @@ public class Game {
 
         switch (this.mLevel) {
             case BEGINNER:
-                this.mBoard = new Board(6, 6, this.mLevel);
+                this.mBoard = new Board(8, 8, this.mLevel);
                 break;
             case INTERMEDIATE:
-                this.mBoard = new Board(8, 12, this.mLevel);
+                this.mBoard = new Board(13, 15, this.mLevel);
                 break;
             case EXPERT:
-                this.mBoard = new Board(16, 16, this.mLevel);
+                this.mBoard = new Board(16, 30, this.mLevel);
                 break;
         }
     }
