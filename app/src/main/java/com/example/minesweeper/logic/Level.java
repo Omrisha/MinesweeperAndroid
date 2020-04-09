@@ -2,7 +2,7 @@ package com.example.minesweeper.logic;
 
 public enum Level {
     BEGINNER(0.1),
-    INTERMIDIATE(0.2),
+    INTERMEDIATE(0.2),
     EXPERT(0.3);
 
     private final double percentage;

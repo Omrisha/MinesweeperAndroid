@@ -18,7 +18,7 @@ public class Game {
             case BEGINNER:
                 this.mBoard = new Board(6, 6, this.mLevel);
                 break;
-            case INTERMIDIATE:
+            case INTERMEDIATE:
                 this.mBoard = new Board(8, 12, this.mLevel);
                 break;
             case EXPERT:

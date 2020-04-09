@@ -8,7 +8,7 @@ public class Tile {
     public Tile() {
         this.mType = TileType.EMPTY;
         this.mIsFlagged = false;
-        this.mIsRevealed = true;
+        this.mIsRevealed = false;
     }
 
     public Tile(TileType mType, Boolean mIsRevealed, Boolean mIsFlagged) {

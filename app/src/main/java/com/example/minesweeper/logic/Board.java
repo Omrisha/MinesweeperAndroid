@@ -23,6 +23,14 @@ public class Board {
         return this.mTiles[index];
     }
 
+    public int getCols() {
+        return cols;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
     public int getCount() {
         return this.mTiles.length;
     }

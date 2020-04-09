@@ -45,7 +45,11 @@ public class TileAdapter extends BaseAdapter {
         }
 
         Tile tile = mBoard.chooseTile(position);
-        tileView.setText(tile.getmType().toString());
+        if (tile.getmIsRevealed()) {
+            tileView.setText(tile.getmType().toString());
+        } else {
+            tileView.setText("");
+        }
         Log.d(TAG, "View returned " + position);
         return tileView;
     }
