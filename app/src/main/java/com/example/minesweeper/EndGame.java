@@ -24,8 +24,8 @@ public class EndGame extends AppCompatActivity {
         findViewById(R.id.buttonExit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                System.exit(0);
+                finishAffinity(); // Close all activites
+                System.exit(0);  // Releasing resources
             }
         });
 
