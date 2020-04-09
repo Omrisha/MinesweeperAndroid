@@ -53,6 +53,10 @@ public class TileAdapter extends BaseAdapter {
             tileView.setText("");
             tileView.setBackgroundColor(Color.GRAY);
         }
+
+        if (tile.getmIsFlagged()) {
+            tileView.setBackgroundColor(Color.RED);
+        }
         Log.d(TAG, "View returned " + position);
         return tileView;
     }

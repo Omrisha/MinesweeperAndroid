@@ -1,8 +1,11 @@
 package com.example.minesweeper;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -58,21 +61,26 @@ public class MainActivity extends AppCompatActivity {
                         Boolean isMine = false;
                         @Override
                         public void run() {
-                            isMine = mGame.getmBoard().playTile(position);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mTileAdapter.notifyDataSetChanged();
-                                }
-                            });
-
-                            if (isMine) {
+                            Boolean isFlagged = mGame.getmBoard().chooseTile(position).getmIsFlagged();
+                            if (!isFlagged) {
+                                isMine = mGame.getmBoard().playTile(position);
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        goToEndActivity("You Lost!");
+                                        mTileAdapter.notifyDataSetChanged();
                                     }
                                 });
+
+                                if (isMine) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            goToEndActivity("You Lost!");
+                                        }
+                                    });
+                                }
+                            } else {
+                                showAlertWindow("Illegal move", "You chose a flagged tile, please unflag it before choosing it.");
                             }
                         }
                     });
@@ -81,6 +89,17 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     goToEndActivity("You Win!");
                 }
+            }
+        });
+
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Tile tile = mGame.getmBoard().chooseTile(position);
+                tile.setmIsFlagged(!tile.getmIsFlagged());
+                mTileAdapter.notifyDataSetChanged();
+                return true;
             }
         });
     }
@@ -107,5 +126,26 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getBaseContext(), EndGame.class);
         intent.putExtra(GAME_STATUS, status);
         startActivity(intent);
+    }
+
+    private void showAlertWindow(String title, String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!isFinishing()){
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle(title)
+                            .setMessage(message)
+                            .setCancelable(false)
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                }
+            }
+        });
     }
 }

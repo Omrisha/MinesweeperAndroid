@@ -2,6 +2,7 @@ package com.example.minesweeper.logic;
 
 public enum TileType {
     EMPTY,
+    FLAG,
     MINE,
     ONE,
     TWO,
@@ -16,6 +17,7 @@ public enum TileType {
     public String toString() {
         switch (this){
             case EMPTY: return "";
+            case FLAG: return "F";
             case MINE: return "M";
             case ONE: return "1";
             case TWO: return "2";

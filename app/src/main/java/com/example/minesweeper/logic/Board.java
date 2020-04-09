@@ -109,16 +109,8 @@ public class Board {
         return cols;
     }
 
-    public int getRows() {
-        return rows;
-    }
-
     public int getCount() {
         return this.mTiles.length;
-    }
-
-    public int getmMines() {
-        return mMines;
     }
 
     public int getNeighbourMineCount(int index) {
