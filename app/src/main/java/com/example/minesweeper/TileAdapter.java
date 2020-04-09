@@ -1,6 +1,7 @@
 package com.example.minesweeper;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +48,10 @@ public class TileAdapter extends BaseAdapter {
         Tile tile = mBoard.chooseTile(position);
         if (tile.getmIsRevealed()) {
             tileView.setText(tile.getmType().toString());
+            tileView.setBackgroundColor(Color.DKGRAY);
         } else {
             tileView.setText("");
+            tileView.setBackgroundColor(Color.GRAY);
         }
         Log.d(TAG, "View returned " + position);
         return tileView;

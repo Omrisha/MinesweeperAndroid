@@ -2,6 +2,7 @@ package com.example.minesweeper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,10 +13,15 @@ import android.widget.TextView;
 
 import com.example.minesweeper.logic.Game;
 import com.example.minesweeper.logic.Level;
+import com.example.minesweeper.logic.Tile;
+import com.example.minesweeper.logic.TileType;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Main Game Activity";
+    public final static String GAME_STATUS = "GAME_STATUS";
     private String mLevelString;
     private Level mLevel;
 
@@ -47,7 +53,34 @@ public class MainActivity extends AppCompatActivity {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!mGame.getmBoard().isGameOver()) {
+                    Thread t = new Thread(new Runnable() {
+                        Boolean isMine = false;
+                        @Override
+                        public void run() {
+                            isMine = mGame.getmBoard().playTile(position);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mTileAdapter.notifyDataSetChanged();
+                                }
+                            });
 
+                            if (isMine) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        goToEndActivity("You Lost!");
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                    t.start();
+                } else {
+                    goToEndActivity("You Win!");
+                }
             }
         });
     }
@@ -68,5 +101,11 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Resume timer.");
             this.mTimer.start();
         }
+    }
+
+    private void goToEndActivity(String status) {
+        Intent intent = new Intent(getBaseContext(), EndGame.class);
+        intent.putExtra(GAME_STATUS, status);
+        startActivity(intent);
     }
 }

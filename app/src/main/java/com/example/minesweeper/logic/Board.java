@@ -8,6 +8,7 @@ public class Board {
     private int mMines = 0;
     private int cols;
     private int rows;
+    private int mRevealedCells = 0;
 
     public Board(int colNumber, int rowNumber, Level difficulty) {
         this.cols = colNumber;
@@ -21,6 +22,52 @@ public class Board {
         if (!inRange(index))
             throw new IndexOutOfBoundsException();
         return this.mTiles[index];
+    }
+
+    public void incrementRevealedCells() {
+        this.mRevealedCells++;
+    }
+
+    public Boolean playTile(int index) {
+        this.mTiles[index].setmIsRevealed(true);
+
+        if(!this.mTiles[index].getmType().equals(TileType.MINE)) {
+            this.mRevealedCells++;
+            int mineCount = this.getNeighbourMineCount(index);
+            if(mineCount == 0) {
+                this.mTiles[index].setmType(TileType.EMPTY);
+                List<Tile> neighbors = getNeighbourCells(index);
+                for(int i = 0; i < neighbors.size(); i++) {
+                    if(!neighbors.get(i).getmIsRevealed()) {
+                        playTile(i);
+                    }
+                }
+            }
+            setTileTypeAccordingToMine(index, mineCount);
+        }
+        return this.mTiles[index].getmType().equals(TileType.MINE) ? true : false;
+    }
+
+    public void setTileTypeAccordingToMine(int index, int mineCount) {
+        switch (mineCount){
+            case 1: this.mTiles[index].setmType(TileType.ONE); break;
+            case 2: this.mTiles[index].setmType(TileType.TWO); break;
+            case 3: this.mTiles[index].setmType(TileType.THREE); break;
+            case 4: this.mTiles[index].setmType(TileType.FOUR); break;
+            case 5: this.mTiles[index].setmType(TileType.FIVE); break;
+            case 6: this.mTiles[index].setmType(TileType.SIX); break;
+            case 7: this.mTiles[index].setmType(TileType.SEVEN); break;
+            case 8: this.mTiles[index].setmType(TileType.EIGHT); break;
+            default: this.mTiles[index].setmType(TileType.EMPTY); break;
+        }
+    }
+
+    public Boolean isGameOver() {
+        if (this.mRevealedCells + this.mMines == this.mTiles.length) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getCols() {
