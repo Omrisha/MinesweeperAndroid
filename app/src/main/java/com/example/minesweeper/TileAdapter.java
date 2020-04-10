@@ -51,7 +51,7 @@ public class TileAdapter extends BaseAdapter {
             tileView.setBackgroundColor(Color.DKGRAY);
         } else {
             tileView.setText("");
-            tileView.setBackgroundColor(Color.GRAY);
+            tileView.setBackgroundColor(Color.parseColor("#808080"));
         }
 
         if (tile.getmIsFlagged()) {

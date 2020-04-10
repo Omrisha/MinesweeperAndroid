@@ -5,7 +5,9 @@
     <color name="colorAccent">#78B4BC</color>
     <color name="colorGridBackground">#BE8C918F</color>
     <color name="exit_button">#FF1100</color>
-    <color name="play_again_button">#9AD654</color>
+    <color name="play_again_button">#969796</color>
+    <color name="tile">#8F9786</color>
+
 
 
 </resources>

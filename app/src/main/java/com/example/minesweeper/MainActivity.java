@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Chronometer;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.minesweeper.logic.Game;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Main Game Activity";
     public final static String GAME_STATUS = "GAME_STATUS";
+
     private String mLevelString;
     private Level mLevel;
 
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        goToEndActivity("You Lost!");
+                                        goToEndActivity(false);
                                     }
                                 });
                             }
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                             showAlertWindow("Illegal move", "You chose a flagged tile, please unflag it before choosing it.");
                         }
                         if (mGame.getmBoard().isGameOver()) {
-                            goToEndActivity("You Win!");
+                            goToEndActivity(true);
                         }
                     }
                 });
@@ -121,11 +123,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void goToEndActivity(String status) {
+    private void goToEndActivity(boolean status) {
         Intent intent = new Intent(getBaseContext(), EndGame.class);
         intent.putExtra(GAME_STATUS, status);
         startActivity(intent);
     }
+
 
     private void showAlertWindow(String title, String message) {
         runOnUiThread(new Runnable() {

@@ -6,12 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".EndGame">
 
-    <ImageView
-        android:src="@drawable/background"
-        android:id="@+id/im2"
-        android:scaleType="fitXY"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,16 +21,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:text="@string/you_won"
-            android:textColor="#040202"
-            android:textSize="60sp"
-            android:textStyle="bold" />
+        <ImageView
+            android:src="@drawable/you_lose"
+            android:id="@+id/im2"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:layout_height="300dp"
+            android:layout_width="400dp"/>
+
+        <ImageView
+            android:src="@drawable/you_win"
+            android:id="@+id/im1"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:layout_height="300dp"
+            android:layout_width="400dp"/>
 
 
         <Button
@@ -43,10 +44,10 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/buttonExit"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:minWidth="100dp"
             android:background="@color/play_again_button"
-            android:textColor="#FFFFFF"
+            android:textColor="#FFFF"
             android:text="@string/but_playAgain"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="300dp" />
@@ -56,11 +57,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:minWidth="100dp"
             android:background="@color/exit_button"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="-100dp"
+            android:textColor="#FFFF"
+            android:layout_marginBottom="-00dp"
             android:text="@string/but_exit"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="350dp" />
