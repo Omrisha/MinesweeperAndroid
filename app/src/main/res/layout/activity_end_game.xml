@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".EndGame">
 
+    <ImageView
+        android:src="@drawable/background"
+        android:id="@+id/im2"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,6 +44,9 @@
             android:layout_alignTop="@id/buttonExit"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
+            android:minWidth="100dp"
+            android:background="@color/play_again_button"
+            android:textColor="#FFFFFF"
             android:text="@string/but_playAgain"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="300dp" />
@@ -47,6 +57,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
+            android:minWidth="100dp"
+            android:background="@color/exit_button"
+            android:textColor="#FFFFFF"
             android:layout_marginBottom="-100dp"
             android:text="@string/but_exit"
             tools:layout_editor_absoluteX="148dp"
