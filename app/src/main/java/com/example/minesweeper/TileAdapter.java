@@ -50,19 +50,19 @@ public class TileAdapter extends BaseAdapter {
         Tile tile = mBoard.chooseTile(position);
         if (tile.getmIsRevealed()) {
             if (tile.getmType().equals(TileType.MINE)) {
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(130, 130);
                 tileView.mTextView.setBackgroundResource(R.drawable.mine);
-                tileView.mTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+               // tileView.mTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 tileView.mTextView.setLayoutParams(layoutParams);
             } else {
                 tileView.setText(tile.getmType().toString());
                 setTileColorForNumber(tileView, tile);
 
             }
-            tileView.setBackgroundColor(Color.GRAY);
+            tileView.setBackgroundColor(Color.WHITE);
         } else {
             tileView.setText("");
-            tileView.setBackgroundColor(Color.DKGRAY);
+            tileView.setBackgroundColor(Color.parseColor("#a0a0a0"));
         }
 
         if (tile.getmIsFlagged()) {
@@ -78,7 +78,7 @@ public class TileAdapter extends BaseAdapter {
                 tileView.mTextView.setTextColor(Color.BLUE);
                 break;
             case TWO:
-                tileView.mTextView.setTextColor(Color.GREEN);
+                tileView.mTextView.setTextColor(Color.parseColor("#00cc00"));
                 break;
             case THREE:
                 tileView.mTextView.setTextColor(Color.RED);

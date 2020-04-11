@@ -59,11 +59,13 @@
                 android:id="@+id/gridView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
+
                 android:layout_weight="7"
                 android:columnWidth="90dp"
-                android:horizontalSpacing="10dp"
-                android:numColumns="6"
-                android:verticalSpacing="10dp" />
+                android:horizontalSpacing="5dp"
+
+                android:verticalSpacing="5dp" />
 
 
     </LinearLayout>

@@ -51,7 +51,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:minWidth="100dp"
-            android:background="@color/play_again_button"
+            android:background="@color/play_button"
             android:textColor="#FFFF"
             android:text="@string/but_playAgain"
             tools:layout_editor_absoluteX="148dp"

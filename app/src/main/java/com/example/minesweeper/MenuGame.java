@@ -51,7 +51,7 @@ public class MenuGame extends AppCompatActivity {
         }
     }
 
-    private void showAlertWindow(String title, String message) {
+    private void showAlertWindow(final String title, final String message) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
