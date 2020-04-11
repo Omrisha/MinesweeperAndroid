@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".EndGame">
 
-
+    <ImageView
+        android:src="@drawable/background"
+        android:id="@+id/im3"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
 
 
     <LinearLayout
@@ -23,21 +28,19 @@
 
         <ImageView
             android:src="@drawable/you_lose"
-            android:contentDescription="@string/you_lost"
             android:id="@+id/im2"
             android:scaleType="fitXY"
             android:visibility="gone"
-            android:layout_height="300dp"
-            android:layout_width="400dp"/>
+            android:layout_height="220dp"
+            android:layout_width="330dp"/>
 
         <ImageView
             android:src="@drawable/you_win"
-            android:contentDescription="@string/you_won"
             android:id="@+id/im1"
             android:scaleType="fitXY"
             android:visibility="gone"
-            android:layout_height="300dp"
-            android:layout_width="400dp"/>
+            android:layout_height="220dp"
+            android:layout_width="330dp"/>
 
 
         <Button
