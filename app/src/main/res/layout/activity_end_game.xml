@@ -23,6 +23,7 @@
 
         <ImageView
             android:src="@drawable/you_lose"
+            android:contentDescription="@string/you_lost"
             android:id="@+id/im2"
             android:scaleType="fitXY"
             android:visibility="gone"
@@ -31,6 +32,7 @@
 
         <ImageView
             android:src="@drawable/you_win"
+            android:contentDescription="@string/you_won"
             android:id="@+id/im1"
             android:scaleType="fitXY"
             android:visibility="gone"

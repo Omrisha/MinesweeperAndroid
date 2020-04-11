@@ -57,7 +57,7 @@ public class Board {
                 setTileTypeAccordingToMine(index, mineCount);
             }
         }
-        return tile.getmType().equals(TileType.MINE) ? true : false;
+        return tile.getmType().equals(TileType.MINE);
     }
 
     public void setTileTypeAccordingToMine(int index, int mineCount) {
