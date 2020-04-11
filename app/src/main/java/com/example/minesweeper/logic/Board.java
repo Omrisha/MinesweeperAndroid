@@ -82,6 +82,14 @@ public class Board {
         }
     }
 
+    public void revealBoard() {
+        for (int i = 0 ; i < getCount(); i++){
+            if (!this.mTiles[i].getmIsRevealed() && this.mTiles[i].getmType().equals(TileType.MINE)) {
+                this.mTiles[i].setmIsRevealed(true);
+            }
+        }
+    }
+
     public int getCols() {
         return cols;
     }

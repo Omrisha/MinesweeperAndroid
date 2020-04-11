@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 
 import com.example.minesweeper.logic.Board;
 import com.example.minesweeper.logic.Tile;
+import com.example.minesweeper.logic.TileType;
 
 public class TileAdapter extends BaseAdapter {
     private static final String TAG = "Tile Adapter";
@@ -47,11 +49,20 @@ public class TileAdapter extends BaseAdapter {
 
         Tile tile = mBoard.chooseTile(position);
         if (tile.getmIsRevealed()) {
-            tileView.setText(tile.getmType().toString());
-            tileView.setBackgroundColor(Color.DKGRAY);
+            if (tile.getmType().equals(TileType.MINE)) {
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
+                tileView.mTextView.setBackgroundResource(R.drawable.mine);
+                tileView.mTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                tileView.mTextView.setLayoutParams(layoutParams);
+            } else {
+                tileView.setText(tile.getmType().toString());
+                setTileColorForNumber(tileView, tile);
+
+            }
+            tileView.setBackgroundColor(Color.GRAY);
         } else {
             tileView.setText("");
-            tileView.setBackgroundColor(Color.parseColor("#808080"));
+            tileView.setBackgroundColor(Color.DKGRAY);
         }
 
         if (tile.getmIsFlagged()) {
@@ -59,5 +70,34 @@ public class TileAdapter extends BaseAdapter {
         }
         Log.d(TAG, "View returned " + position);
         return tileView;
+    }
+
+    private void setTileColorForNumber(TileView tileView, Tile tile) {
+        switch (tile.getmType()) {
+            case ONE:
+                tileView.mTextView.setTextColor(Color.BLUE);
+                break;
+            case TWO:
+                tileView.mTextView.setTextColor(Color.GREEN);
+                break;
+            case THREE:
+                tileView.mTextView.setTextColor(Color.RED);
+                break;
+            case FOUR:
+                tileView.mTextView.setTextColor(Color.rgb(0,0,139));
+                break;
+            case FIVE:
+                tileView.mTextView.setTextColor(Color.rgb(165,42,42));
+                break;
+            case SIX:
+                tileView.mTextView.setTextColor(Color.rgb(64,224,208));
+                break;
+            case SEVEN:
+                tileView.mTextView.setTextColor(Color.BLACK);
+                break;
+            case EIGHT:
+                tileView.mTextView.setTextColor(Color.DKGRAY);
+                break;
+        }
     }
 }

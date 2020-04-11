@@ -22,7 +22,7 @@ public class TileView extends LinearLayout {
         mTextView.setTextSize(25);
         mTextView.setTextColor(Color.WHITE);
         mTextView.setText("DEFAULT");
-        setBackgroundColor(Color.GRAY);
+        setBackgroundColor(Color.DKGRAY);
 
         addView(mTextView);
     }

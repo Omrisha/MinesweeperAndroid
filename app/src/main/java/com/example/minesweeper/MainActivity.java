@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
                             });
 
                             if (isMine) {
+                                mGame.getmBoard().revealBoard();
+                                waitForEndScreen(3000);
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -84,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
                             showAlertWindow("Illegal move", "You chose a flagged tile, please unflag it before choosing it.");
                         }
                         if (mGame.getmBoard().isGameOver()) {
+                            mGame.getmBoard().revealBoard();
+                            waitForEndScreen(3000);
                             goToEndActivity(true);
                         }
                     }
@@ -103,6 +107,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void waitForEndScreen(int i) {
+        try {
+            Thread.sleep(i);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
