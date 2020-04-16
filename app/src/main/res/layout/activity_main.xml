@@ -26,46 +26,43 @@
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_bias="0.0">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
             <Chronometer
                 android:id="@+id/gameTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:paddingTop="55dp"
-                android:paddingBottom="5dp"
                 android:paddingHorizontal="6dp"
-                android:textSize="22sp"
+                android:paddingTop="35dp"
+                android:paddingBottom="5dp"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
-             <ImageView
+            <ImageView
                 android:id="@+id/im1"
                 android:layout_width="220dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_gravity="left"
-                 android:paddingTop="15dp"
+                android:paddingTop="10dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/logo2" />
 
-    </LinearLayout>
+        </LinearLayout>
 
         <GridView
                 android:id="@+id/gridView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-
                 android:layout_weight="7"
-                android:columnWidth="90dp"
-                android:horizontalSpacing="5dp"
 
-                android:verticalSpacing="5dp" />
+                android:horizontalSpacing="3dp"
+                android:verticalSpacing="3dp" />
 
 
     </LinearLayout>

@@ -19,7 +19,7 @@ public class TileView extends LinearLayout {
         mTextView.setLayoutParams(layoutParams);
         mTextView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         mTextView.setGravity(Gravity.CENTER);
-        mTextView.setTextSize(25);
+        mTextView.setTextSize(10);
         mTextView.setTextColor(Color.WHITE);
         mTextView.setText("DEFAULT");
         setBackgroundColor(Color.DKGRAY);

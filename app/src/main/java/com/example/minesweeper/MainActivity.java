@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
                             if (isMine) {
                                 mGame.getmBoard().revealBoard();
-                                waitForEndScreen(3000);
+                                waitForEndScreen(1800);
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if (mGame.getmBoard().isGameOver()) {
                             mGame.getmBoard().revealBoard();
-                            waitForEndScreen(3000);
+                            waitForEndScreen(1800);
                             goToEndActivity(true);
                         }
                     }

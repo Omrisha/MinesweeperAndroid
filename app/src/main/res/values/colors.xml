@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#78B4BC</color>
     <color name="colorGridBackground">#BE8C918F</color>
-    <color name="exit_button">#FF1100</color>
-    <color name="play_button">#309F34</color>
+    <color name="exit_button">#F44336</color>
+    <color name="play_button">#35A53A</color>
     <color name="tile">#8F9786</color>
 
 

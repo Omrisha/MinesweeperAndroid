@@ -3,6 +3,7 @@ package com.example.minesweeper;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -58,11 +59,11 @@ public class TileAdapter extends BaseAdapter {
                         tileView.mTextView.setTextSize(25);
                         break;
                     case INTERMEDIATE:
-                        layoutParams = new LinearLayout.LayoutParams(70, 70);
+                        layoutParams = new LinearLayout.LayoutParams(78, 78);
                         tileView.mTextView.setTextSize(15);
                         break;
                     case EXPERT:
-                        layoutParams = new LinearLayout.LayoutParams(40, 40);
+                        layoutParams = new LinearLayout.LayoutParams(52, 52);
                         tileView.mTextView.setTextSize(10);
                         break;
                 }
@@ -87,7 +88,7 @@ public class TileAdapter extends BaseAdapter {
                     tileView.mTextView.setTextSize(10);
                     break;
             }
-            tileView.setBackgroundColor(Color.parseColor("#a0a0a0"));
+            tileView.setBackgroundColor(Color.parseColor("#808080"));
         }
 
         if (tile.getmIsFlagged()) {
