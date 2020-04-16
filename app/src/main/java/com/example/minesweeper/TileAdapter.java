@@ -56,6 +56,7 @@ public class TileAdapter extends BaseAdapter {
             } else {
                 tileView.setText(tile.getmType().toString());
                 setTileColorForNumber(tileView, tile);
+                tileView.mTextView.setBackgroundResource(0);
             }
             tileView.setBackgroundColor(Color.WHITE);
         } else {
