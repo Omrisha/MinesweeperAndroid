@@ -3,7 +3,6 @@ package com.example.minesweeper;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -48,54 +47,50 @@ public class TileAdapter extends BaseAdapter {
             Log.d(TAG, "View created " + position);
             tileView = new TileView(mContext);
         }
-
+        LinearLayout.LayoutParams layoutParams = getLayoutParams(tileView);
         Tile tile = mBoard.chooseTile(position);
         if (tile.getmIsRevealed()) {
             if (tile.getmType().equals(TileType.MINE)) {
-                LinearLayout.LayoutParams layoutParams = null;
-                switch(mBoard.getmLevel()) {
-                    case BEGINNER:
-                        layoutParams = new LinearLayout.LayoutParams(130, 130);
-                        tileView.mTextView.setTextSize(25);
-                        break;
-                    case INTERMEDIATE:
-                        layoutParams = new LinearLayout.LayoutParams(78, 78);
-                        tileView.mTextView.setTextSize(15);
-                        break;
-                    case EXPERT:
-                        layoutParams = new LinearLayout.LayoutParams(52, 52);
-                        tileView.mTextView.setTextSize(10);
-                        break;
-                }
                 tileView.mTextView.setBackgroundResource(R.drawable.mine);
                 tileView.mTextView.setLayoutParams(layoutParams);
             } else {
                 tileView.setText(tile.getmType().toString());
                 setTileColorForNumber(tileView, tile);
-
             }
             tileView.setBackgroundColor(Color.WHITE);
         } else {
             tileView.setText("");
-            switch(mBoard.getmLevel()) {
-                case BEGINNER:
-                    tileView.mTextView.setTextSize(25);
-                    break;
-                case INTERMEDIATE:
-                    tileView.mTextView.setTextSize(15);
-                    break;
-                case EXPERT:
-                    tileView.mTextView.setTextSize(10);
-                    break;
-            }
-            tileView.setBackgroundColor(Color.parseColor("#808080"));
+            tileView.setBackgroundColor(Color.parseColor("#a0a0a0"));
         }
 
         if (tile.getmIsFlagged()) {
-            tileView.setBackgroundColor(Color.RED);
+            tileView.mTextView.setBackgroundResource(R.drawable.flag_red);
+            tileView.mTextView.setLayoutParams(layoutParams);
+        } else {
+            if (!tile.getmIsRevealed())
+                tileView.mTextView.setBackgroundResource(0);
         }
         Log.d(TAG, "View returned " + position);
         return tileView;
+    }
+
+    private LinearLayout.LayoutParams getLayoutParams(TileView tileView) {
+        LinearLayout.LayoutParams layoutParams = null;
+        switch(mBoard.getmLevel()) {
+            case BEGINNER:
+                layoutParams = new LinearLayout.LayoutParams(130, 100);
+                tileView.mTextView.setTextSize(25);
+                break;
+            case INTERMEDIATE:
+                layoutParams = new LinearLayout.LayoutParams(78, 60);
+                tileView.mTextView.setTextSize(15);
+                break;
+            case EXPERT:
+                layoutParams = new LinearLayout.LayoutParams(52, 40);
+                tileView.mTextView.setTextSize(10);
+                break;
+        }
+        return layoutParams;
     }
 
     private void setTileColorForNumber(TileView tileView, Tile tile) {
