@@ -59,17 +59,17 @@ public class TileAdapter extends BaseAdapter {
             }
             tileView.setBackgroundColor(Color.WHITE);
         } else {
-            tileView.setText("");
-            tileView.setBackgroundColor(Color.parseColor("#a0a0a0"));
+            if (tile.getmIsFlagged()) {
+                tileView.mTextView.setBackgroundResource(R.drawable.flag_red);
+                tileView.mTextView.setLayoutParams(layoutParams);
+            } else {
+                tileView.mTextView.setBackgroundResource(0);
+                tileView.setText("");
+                tileView.setBackgroundColor(Color.parseColor("#a0a0a0"));
+            }
         }
 
-        if (tile.getmIsFlagged()) {
-            tileView.mTextView.setBackgroundResource(R.drawable.flag_red);
-            tileView.mTextView.setLayoutParams(layoutParams);
-        } else {
-            if (!tile.getmIsRevealed())
-                tileView.mTextView.setBackgroundResource(0);
-        }
+
         Log.d(TAG, "View returned " + position);
         return tileView;
     }
