@@ -18,13 +18,19 @@ public class Board {
     private int cols;
     private int rows;
     private int mRevealedCells = 0;
+    private Level mLevel;
 
     public Board(int colNumber, int rowNumber, Level difficulty) {
         this.cols = colNumber;
         this.rows = rowNumber;
+        this.mLevel = difficulty;
         this.mTiles = new Tile[rowNumber*colNumber];
         this.mMines = getMines(rowNumber * colNumber, difficulty);
         this.mTiles = BoardBuilder.buildBoard(rowNumber*colNumber, this.mMines);
+    }
+
+    public Level getmLevel() {
+        return mLevel;
     }
 
     public Tile chooseTile(int index) {

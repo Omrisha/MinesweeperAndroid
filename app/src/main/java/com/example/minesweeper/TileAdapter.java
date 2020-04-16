@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 
 import com.example.minesweeper.logic.Board;
+import com.example.minesweeper.logic.Level;
 import com.example.minesweeper.logic.Tile;
 import com.example.minesweeper.logic.TileType;
 
@@ -50,9 +51,22 @@ public class TileAdapter extends BaseAdapter {
         Tile tile = mBoard.chooseTile(position);
         if (tile.getmIsRevealed()) {
             if (tile.getmType().equals(TileType.MINE)) {
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(130, 130);
+                LinearLayout.LayoutParams layoutParams = null;
+                switch(mBoard.getmLevel()) {
+                    case BEGINNER:
+                        layoutParams = new LinearLayout.LayoutParams(130, 130);
+                        tileView.mTextView.setTextSize(25);
+                        break;
+                    case INTERMEDIATE:
+                        layoutParams = new LinearLayout.LayoutParams(70, 70);
+                        tileView.mTextView.setTextSize(15);
+                        break;
+                    case EXPERT:
+                        layoutParams = new LinearLayout.LayoutParams(40, 40);
+                        tileView.mTextView.setTextSize(10);
+                        break;
+                }
                 tileView.mTextView.setBackgroundResource(R.drawable.mine);
-               // tileView.mTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 tileView.mTextView.setLayoutParams(layoutParams);
             } else {
                 tileView.setText(tile.getmType().toString());
@@ -62,6 +76,17 @@ public class TileAdapter extends BaseAdapter {
             tileView.setBackgroundColor(Color.WHITE);
         } else {
             tileView.setText("");
+            switch(mBoard.getmLevel()) {
+                case BEGINNER:
+                    tileView.mTextView.setTextSize(25);
+                    break;
+                case INTERMEDIATE:
+                    tileView.mTextView.setTextSize(15);
+                    break;
+                case EXPERT:
+                    tileView.mTextView.setTextSize(10);
+                    break;
+            }
             tileView.setBackgroundColor(Color.parseColor("#a0a0a0"));
         }
 
