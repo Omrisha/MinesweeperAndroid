@@ -2,12 +2,17 @@ package com.example.minesweeper;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -18,19 +23,51 @@ public class MenuGame extends AppCompatActivity {
     RadioGroup mLevelsRadioGroup;
     RadioButton mLevelChooser;
     Button mStartGameButton;
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_game);
 
+        final SharedPreferences preferences = getSharedPreferences("saved", 0);
+
+
         this.mLevelsRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         this.mStartGameButton = (Button) findViewById(R.id.butStartGame);
+
+       //**********
+        mLevelsRadioGroup.check(preferences.getInt("CheckedID", 0));
+        mLevelsRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("CheckedId", checkedId);
+                editor.apply();
+            }
+
+        });
+       //*********
 
         this.mStartGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startGame();
+            }
+        });
+
+        //Record List Button
+        ImageButton recordBut = (ImageButton)findViewById(R.id.butRecordList);
+        recordBut.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+               Log.d("BUTTON","****** click on button record list ******");
+
+                FragmentManager fm = getSupportFragmentManager();
+                RecordListFragment fragment = new RecordListFragment();
+
+                fm.beginTransaction().add(R.id.container , fragment).commit();
             }
         });
     }

@@ -9,6 +9,15 @@
     <string name="you_lost">you lost</string>
     <string name="but_playAgain">play again!</string>
     <string name="but_exit">exit</string>
+    <string name="record_list">Record List</string>
+    <string name="massage_broken_record">you"'"ve broken a record!</string>
+    <string name="massage_enter_name">Enter your name:</string>
+    <string name="but_save">save</string>
+    <string name="but_exit_fragment">X</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 
 
