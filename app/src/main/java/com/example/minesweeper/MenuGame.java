@@ -15,43 +15,36 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class MenuGame extends AppCompatActivity {
 
+    final String KEY_SAVED_RADIO_BUTTON_INDEX = "SAVED_RADIO_BUTTON_INDEX";
+    SharedPreferences sharedPreferences;
     public final static String GAME_LEVEL = "GAME_LEVEL";
     private String mLevel;
     RadioGroup mLevelsRadioGroup;
     RadioButton mLevelChooser;
     Button mStartGameButton;
-    SharedPreferences sharedpreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_game);
-
-        final SharedPreferences preferences = getSharedPreferences("saved", 0);
-
+        sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
 
         this.mLevelsRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         this.mStartGameButton = (Button) findViewById(R.id.butStartGame);
 
-       //**********
-        mLevelsRadioGroup.check(preferences.getInt("CheckedID", 0));
-        mLevelsRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt("CheckedId", checkedId);
-                editor.apply();
-            }
+        mLevelsRadioGroup.setOnCheckedChangeListener(radioGroupOnCheckedChangeListener);
+        LoadPreferences();
 
-        });
-       //*********
 
         this.mStartGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startGame();
             }
         });
@@ -59,7 +52,6 @@ public class MenuGame extends AppCompatActivity {
         //Record List Button
         ImageButton recordBut = (ImageButton)findViewById(R.id.butRecordList);
         recordBut.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                Log.d("BUTTON","****** click on button record list ******");
@@ -72,12 +64,41 @@ public class MenuGame extends AppCompatActivity {
         });
     }
 
+
+    OnCheckedChangeListener radioGroupOnCheckedChangeListener =
+            new OnCheckedChangeListener(){
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    RadioButton checkedRadioButton = (RadioButton)mLevelsRadioGroup.findViewById(checkedId);
+                    int checkedIndex = mLevelsRadioGroup.indexOfChild(checkedRadioButton);
+                    SavePreferences(KEY_SAVED_RADIO_BUTTON_INDEX, checkedIndex);
+                }};
+
+
+
+    private void SavePreferences(String key, int value){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
+
+
+    private void LoadPreferences(){
+        int savedRadioIndex = sharedPreferences.getInt(KEY_SAVED_RADIO_BUTTON_INDEX, 0);
+        RadioButton savedCheckedRadioButton = (RadioButton)mLevelsRadioGroup.getChildAt(savedRadioIndex);
+        savedCheckedRadioButton.setChecked(true);
+    }
+
+
+
+
     private void startGame() {
         // get selected radio button from radioGroup
         int selectedId = mLevelsRadioGroup.getCheckedRadioButtonId();
 
         // find the radiobutton by returned id
         mLevelChooser = (RadioButton) findViewById(selectedId);
+
         if (mLevelChooser != null) {
             this.mLevel = mLevelChooser.getText().toString();
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
