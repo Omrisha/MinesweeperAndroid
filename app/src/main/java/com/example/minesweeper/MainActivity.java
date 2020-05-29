@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Chronometer;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import com.example.minesweeper.logic.Game;
 import com.example.minesweeper.logic.Level;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
     GridView mGridView;
     TileAdapter mTileAdapter;
     Chronometer mTimer;
+    ImageView mLockRotation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
         // Init widgets
         mGridView = findViewById(R.id.gridView);
         mTimer = findViewById(R.id.gameTimer);
+        mLockRotation = findViewById(R.id.lock_img_view);
 
         this.mLevel = Level.valueOf(this.mLevelString.toUpperCase());
 
@@ -167,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
             mBinder.registerListener(MainActivity.this);
             Log.d("Service Connection", "registered as listener");
             isBound = true;
+            mLockRotation.setVisibility(View.VISIBLE);
             mBinder.startSensors();
         }
 
