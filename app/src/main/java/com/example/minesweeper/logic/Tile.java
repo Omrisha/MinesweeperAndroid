@@ -1,6 +1,8 @@
 package com.example.minesweeper.logic;
 
-public class Tile {
+import java.io.Serializable;
+
+public class Tile implements Serializable {
     private TileType mType;
     private Boolean mIsRevealed;
     private Boolean mIsFlagged;

@@ -1,9 +1,10 @@
 package com.example.minesweeper.logic;
 
+import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Game {
+public class Game implements Serializable {
     private Board mBoard;
     private TimeCounter mTimeCounter;
     private Timer mTimer;
