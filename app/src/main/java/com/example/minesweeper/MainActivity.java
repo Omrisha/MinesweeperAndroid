@@ -26,10 +26,16 @@ import java.io.Serializable;
 
 public class MainActivity extends AppCompatActivity implements SensorServiceListener {
 
+    private static final String GAME_ORIENTATION = "GAME_ORIENTATION";
+    private static final String TAG = "Main Game Activity";
+    public final static String GAME_STATUS = "GAME_STATUS";
+    private final static String GAME_TIME = "GAME_TIME";
+
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         mGame = (Game)savedInstanceState.getSerializable(GAME_STATUS);
-        mTimer.setText(savedInstanceState.getString(GAME_TIME));
+        mTimer.setBase(savedInstanceState.getLong(GAME_TIME));
+        mBinder = (SensorService.SensorServiceBinder) savedInstanceState.getBinder(GAME_ORIENTATION);
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -37,12 +43,9 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
     protected void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(GAME_STATUS, mGame);
         outState.putLong(GAME_TIME, mTimer.getBase());
+        outState.putBinder(GAME_ORIENTATION, mBinder);
         super.onSaveInstanceState(outState);
     }
-
-    private static final String TAG = "Main Game Activity";
-    public final static String GAME_STATUS = "GAME_STATUS";
-    public final static String GAME_TIME = "GAME_TIME";
 
     private String mLevelString;
     private Level mLevel;
@@ -81,7 +84,22 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
         mGridView.setNumColumns(this.mGame.getmBoard().getCols());
         mGridView.setAdapter(mTileAdapter);
 
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridView.setOnItemClickListener(getIllegal_move());
+
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Tile tile = mGame.getmBoard().chooseTile(position);
+                tile.setmIsFlagged(!tile.getmIsFlagged());
+                mTileAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+    }
+
+    private AdapterView.OnItemClickListener getIllegal_move() {
+        return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Thread t = new Thread(new Runnable() {
@@ -121,18 +139,7 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
 
                 t.start();
             }
-        });
-
-        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Tile tile = mGame.getmBoard().chooseTile(position);
-                tile.setmIsFlagged(!tile.getmIsFlagged());
-                mTileAdapter.notifyDataSetChanged();
-                return true;
-            }
-        });
+        };
     }
 
     private void waitForEndScreen(int i) {

@@ -35,14 +35,15 @@ public class SensorService extends Service implements SensorEventListener {
 
     SensorServiceListener mListener;
 
-    SensorManager mSensorManager;
     Sensor mSensor;
+    SensorManager mSensorManager;
 
     SensorEvent mFirstEvent;
 
     public class SensorServiceBinder extends Binder {
         void registerListener(SensorServiceListener listener){
             Log.d("Binder", "registering...");
+            mListener = listener;
         }
 
         void startSensors(){
@@ -64,12 +65,12 @@ public class SensorService extends Service implements SensorEventListener {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         if (mSensorManager != null){
-            mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+            mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
             if (mSensor != null){
-                Log.d(TAG , "Game rotation vector available");
+                Log.d(TAG , "Accelerometer available");
             } else {
-                Log.d(TAG , "Game rotation vector not available");
+                Log.d(TAG , "Accelerometer not available");
             }
         }
     }
@@ -89,17 +90,20 @@ public class SensorService extends Service implements SensorEventListener {
         if (mFirstEvent == null){
             mFirstEvent = event;
         } else {
-            float[] eventArr = getRotationArray(event.values);
-            float[] neweventArr = getRotationArray(mFirstEvent.values);
+            float[] eventArr = new float[9];
+            SensorManager.getRotationMatrixFromVector(eventArr, mFirstEvent.values);
+            float[] neweventArr = new float[9];
+            SensorManager.getRotationMatrixFromVector(neweventArr, event.values);
 
-            double absDiffX = neweventArr[0] - eventArr[0];
-            double absDiffY = neweventArr[1] - eventArr[1];
-            double absDiffZ = neweventArr[2] - eventArr[2];
+            float[] angleChagneMatrix = new float[3];
+            SensorManager.getAngleChange(angleChagneMatrix, neweventArr, eventArr);
 
-            Log.d("DIFFS", "" + absDiffX + " " + absDiffY + " " + absDiffZ);
+            Log.d("DIFFS", "" + angleChagneMatrix[0] + " " + angleChagneMatrix[1] + " " + angleChagneMatrix[2]);
 
             SensorServiceListener.ALARM_STATE previousState = currentAlarmState;
-            if (absDiffX > THRESHOLD || absDiffY > THRESHOLD || absDiffZ > THRESHOLD ) {
+            if (Math.abs(angleChagneMatrix[0]) > THRESHOLD ||
+                    Math.abs(angleChagneMatrix[1]) > THRESHOLD ||
+                    Math.abs(angleChagneMatrix[2]) > THRESHOLD ) {
                 this.currentAlarmState = SensorServiceListener.ALARM_STATE.ON;
             } else {
                 this.currentAlarmState = SensorServiceListener.ALARM_STATE.OFF;
