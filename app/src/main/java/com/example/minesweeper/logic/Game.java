@@ -1,19 +1,16 @@
 package com.example.minesweeper.logic;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Game implements Serializable {
     private Board mBoard;
-    private TimeCounter mTimeCounter;
-    private Timer mTimer;
     private Level mLevel;
 
     public Game(Level mLevel) {
         this.mLevel = mLevel;
-        this.mTimeCounter = new TimeCounter();
-        this.mTimer = new Timer();
 
         switch (this.mLevel) {
             case BEGINNER:
@@ -32,26 +29,14 @@ public class Game implements Serializable {
         return mBoard;
     }
 
-    public void startTimer(){
-        this.mTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                increaseTime();
-            }
-        }, 0);
-    }
+    public void flagATile(int position) { this.mBoard.flagTile(position); }
 
-    public void stopTimer() {
-        this.mTimer.cancel();
-    }
-
-    public void startGame() {
-
-    }
-
-    private void increaseTime() {
-        if (this.mTimeCounter != null) {
-            this.mTimeCounter.increaseTime();
-        }
+    public void handlePenalty(){
+        List<Tile> revealedTiles = this.mBoard.getTilesByType(TileType.EMPTY);
+        Tile removed = revealedTiles.remove(revealedTiles.size() - 1);
+        int index = Board.find(this.mBoard.getmTiles(), removed);
+        mBoard.getmTiles()[index].setmIsRevealed(false);
+        mBoard.setmMines(mBoard.getmMines()-1);
+        mBoard.setmRevealedCells(mBoard.getRevealedCells()-1);
     }
 }

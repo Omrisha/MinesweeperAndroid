@@ -9,7 +9,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +20,8 @@ import android.widget.AdapterView;
 import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.minesweeper.logic.Game;
 import com.example.minesweeper.logic.Level;
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
     TileAdapter mTileAdapter;
     Chronometer mTimer;
     ImageView mLockRotation;
+    LinearLayout mMainLayout;
+    GradientDrawable mStroke;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
         mGridView = findViewById(R.id.gridView);
         mTimer = findViewById(R.id.gameTimer);
         mLockRotation = findViewById(R.id.lock_img_view);
+        mMainLayout = findViewById(R.id.main_screen);
+        mStroke = new GradientDrawable();
+        mStroke.setStroke(10, Color.RED);
 
         this.mLevel = Level.valueOf(this.mLevelString.toUpperCase());
 
@@ -90,8 +100,7 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Tile tile = mGame.getmBoard().chooseTile(position);
-                tile.setmIsFlagged(!tile.getmIsFlagged());
+                mGame.flagATile(position);
                 mTileAdapter.notifyDataSetChanged();
                 return true;
             }
@@ -245,8 +254,37 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
         });
     }
 
+    CountDownTimer countDownTimer = new CountDownTimer(20000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            Toast.makeText(getApplicationContext(), "You change the device orientation, you have " + millisUntilFinished/1000 + " to change it back.", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onFinish() {
+            mGame.handlePenalty();
+            this.start();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mTileAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+    };
+
     @Override
     public void alarmStateChanged(ALARM_STATE state) {
         Log.d(TAG, "STATE: " + state);
+        switch(state){
+            case ON:
+                countDownTimer.start();
+                this.mMainLayout.setBackground(mStroke);
+                break;
+            case OFF:
+                countDownTimer.cancel();
+                this.mMainLayout.setBackground(null);
+                break;
+        }
     }
 }

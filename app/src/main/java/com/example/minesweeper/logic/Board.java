@@ -2,11 +2,14 @@ package com.example.minesweeper.logic;
 
 import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.annotation.WorkerThread;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Board implements Serializable {
     private Tile[] mTiles;
@@ -35,8 +38,18 @@ public class Board implements Serializable {
         return this.mTiles[index];
     }
 
-    public void incrementRevealedCells() {
-        this.mRevealedCells++;
+    public int getRevealedCells() { return this.mRevealedCells; }
+
+    public void setmRevealedCells(int mRevealedCells) {
+        this.mRevealedCells = mRevealedCells;
+    }
+
+    public int getmMines() {
+        return mMines;
+    }
+
+    public void setmMines(int mMines) {
+        this.mMines = mMines;
     }
 
     public Boolean playTile(int index) {
@@ -162,12 +175,25 @@ public class Board implements Serializable {
         return (int) (difficulty.getPercentage() * cells);
     }
 
+    public List<Tile> getTilesByType(TileType type){
+        List<Tile> items = new ArrayList<>();
+        for (Tile tile : mTiles){
+            if (tile.getmType().equals(type))
+                items.add(tile);
+        }
+        return items;
+    }
+
     private boolean inRange(final int index) {
         if (index < 0 || index >= getCount()) {
             return false;
         } else {
             return this.mTiles[index] != null;
         }
+    }
+
+    public Tile[] getmTiles() {
+        return mTiles;
     }
 
     // Generic function to find the index of an element in an object array in Java
