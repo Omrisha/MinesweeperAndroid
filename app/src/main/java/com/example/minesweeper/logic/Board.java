@@ -128,6 +128,14 @@ public class Board implements Serializable {
         this.mTiles[index].setmIsFlagged(!this.mTiles[index].getmIsFlagged());
     }
 
+    public void flipTile(int index){
+        if (this.mTiles[index].getmIsRevealed())
+            this.mRevealedCells--;
+        else
+            this.mRevealedCells++;
+        this.mTiles[index].setmIsRevealed(!this.mTiles[index].getmIsRevealed());
+    }
+
     public List<Tile> getNeighbourCells(int index) {
         List<Tile> neighbours = new ArrayList<Tile>();
 
@@ -175,10 +183,10 @@ public class Board implements Serializable {
         return (int) (difficulty.getPercentage() * cells);
     }
 
-    public List<Tile> getTilesByType(TileType type){
+    public List<Tile> getTilesByType(TileType type, boolean isRevealed){
         List<Tile> items = new ArrayList<>();
         for (Tile tile : mTiles){
-            if (tile.getmType().equals(type))
+            if (tile.getmType().equals(type) && tile.getmIsRevealed().equals(isRevealed))
                 items.add(tile);
         }
         return items;

@@ -254,22 +254,22 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
         });
     }
 
-    CountDownTimer countDownTimer = new CountDownTimer(20000, 1000) {
+    CountDownTimer countDownTimer = new CountDownTimer(20000, 5000) {
         @Override
         public void onTick(long millisUntilFinished) {
             Toast.makeText(getApplicationContext(), "You change the device orientation, you have " + millisUntilFinished/1000 + " to change it back.", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onFinish() {
             mGame.handlePenalty();
-            this.start();
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     mTileAdapter.notifyDataSetChanged();
                 }
             });
+        }
+
+        @Override
+        public void onFinish() {
+            this.start();
         }
     };
 

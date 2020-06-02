@@ -117,29 +117,6 @@ public class SensorService extends Service implements SensorEventListener {
         Log.d(TAG,event.values[0] + " " + event.values[1] + " " + event.values[2]);
     }
 
-    private float[] getRotationArray(float[] vectors) {
-//        double theta = Math.acos(values[3])*2;
-//        double sinv = Math.sin(theta/2);
-//
-//        double xa = values[0]/sinv;
-//        double ya = values[1]/sinv;
-//        double za = values[2]/sinv;
-
-        float[] rotationMatrix = new float[9];
-        SensorManager.getRotationMatrixFromVector(rotationMatrix, vectors);
-        int worldAxisX = SensorManager.AXIS_X;
-        int worldAxisZ = SensorManager.AXIS_Z;
-        float[] adjustedRotationMatrix = new float[9];
-        SensorManager.remapCoordinateSystem(rotationMatrix, worldAxisX, worldAxisZ, adjustedRotationMatrix);
-        float[] orientation = new float[3];
-        SensorManager.getOrientation(adjustedRotationMatrix, orientation);
-        orientation[0] = (float) Math.toDegrees(orientation[0]);
-        orientation[1] = (float) Math.toDegrees(orientation[1]);
-        orientation[2] = (float) Math.toDegrees(orientation[2]);
-
-        return orientation;
-    }
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 

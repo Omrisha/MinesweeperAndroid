@@ -32,11 +32,11 @@ public class Game implements Serializable {
     public void flagATile(int position) { this.mBoard.flagTile(position); }
 
     public void handlePenalty(){
-        List<Tile> revealedTiles = this.mBoard.getTilesByType(TileType.EMPTY);
+        List<Tile> revealedTiles = this.mBoard.getTilesByType(TileType.EMPTY, true);
         Tile removed = revealedTiles.remove(revealedTiles.size() - 1);
         int index = Board.find(this.mBoard.getmTiles(), removed);
-        mBoard.getmTiles()[index].setmIsRevealed(false);
-        mBoard.setmMines(mBoard.getmMines()-1);
-        mBoard.setmRevealedCells(mBoard.getRevealedCells()-1);
+        this.mBoard.flipTile(index);
+        mBoard.setmMines(mBoard.getmMines()+1);
+
     }
 }
