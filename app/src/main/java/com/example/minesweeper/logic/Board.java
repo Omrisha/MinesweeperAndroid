@@ -183,10 +183,10 @@ public class Board implements Serializable {
         return (int) (difficulty.getPercentage() * cells);
     }
 
-    public List<Tile> getTilesByType(TileType type, boolean isRevealed){
+    public List<Tile> getRevealedTileList(){
         List<Tile> items = new ArrayList<>();
         for (Tile tile : mTiles){
-            if (tile.getmType().equals(type) && tile.getmIsRevealed().equals(isRevealed))
+            if ((!tile.getmType().equals(TileType.MINE) || !tile.getmType().equals(TileType.FLAG)) && tile.getmIsRevealed().equals(true))
                 items.add(tile);
         }
         return items;

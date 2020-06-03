@@ -2,8 +2,7 @@ package com.example.minesweeper.logic;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Random;
 
 public class Game implements Serializable {
     private Board mBoard;
@@ -32,9 +31,13 @@ public class Game implements Serializable {
     public void flagATile(int position) { this.mBoard.flagTile(position); }
 
     public void handlePenalty(){
-        List<Tile> revealedTiles = this.mBoard.getTilesByType(TileType.EMPTY, true);
+        List<Tile> revealedTiles = this.mBoard.getRevealedTileList();
         if (revealedTiles.size() > 0){
-            Tile removed = revealedTiles.remove(revealedTiles.size() - 1);
+            Random rand = new Random();
+            int randomIndex = rand.nextInt(revealedTiles.size()-1);
+            Tile removed = revealedTiles.remove(randomIndex);
+            if (!removed.getmType().equals(TileType.EMPTY))
+                removed.setmType(TileType.EMPTY);
             int index = Board.find(this.mBoard.getmTiles(), removed);
             this.mBoard.flipTile(index);
             mBoard.setmMines(mBoard.getmMines()+1);
