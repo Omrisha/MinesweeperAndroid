@@ -26,9 +26,6 @@ import java.util.List;
 public class RecordListFragment extends Fragment {
 
     public static final String SHARED_PREFS = "SharedPrefs";
-    public TextView textResultRecords;
-//    String nameB1, nameB2, nameB3, nameI1, nameI2, nameI3, nameE1, nameE2, nameE3;
-//    long timeB1, timeB2, timeB3, timeI1, timeI2, timeI3, timeE1, timeE2, timeE3;
 
 
     public RecordListFragment() {

@@ -2,7 +2,6 @@ package com.example.minesweeper;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.SystemClock;
@@ -16,14 +15,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.minesweeper.logic.Level;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class EndGame extends AppCompatActivity {
     TextView mText;
@@ -44,6 +37,7 @@ public class EndGame extends AppCompatActivity {
         long time = (SystemClock.elapsedRealtime()) - (getIntent().getLongExtra(MainActivity.GAME_TIME, 10000));
         Log.d("TIME***********", time + "");
         String level = getIntent().getStringExtra(MainActivity.GAME_LEVEL);
+
 
 
         //String status = getIntent().getStringExtra(MainActivity.GAME_STATUS);

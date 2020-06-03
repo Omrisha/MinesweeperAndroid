@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
     private static final String GAME_ORIENTATION = "GAME_ORIENTATION";
     private static final String TAG = "Main Game Activity";
     public final static String GAME_STATUS = "GAME_STATUS";
-    private final static String GAME_TIME = "GAME_TIME";
+    public final static String GAME_TIME = "GAME_TIME";
     public final static String GAME_LEVEL = "GAME_LEVEL";
 
     @Override

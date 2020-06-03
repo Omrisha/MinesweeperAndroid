@@ -7,6 +7,7 @@
     tools:context=".MenuGame"
     android:id="@+id/container">
 
+
     <ImageView
         android:src="@drawable/background_pic"
         android:id="@+id/im1"
