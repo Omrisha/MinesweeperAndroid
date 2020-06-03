@@ -7,11 +7,14 @@ import androidx.fragment.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SurfaceControl;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -24,6 +27,7 @@ public class MenuGame extends AppCompatActivity {
     RadioGroup mLevelsRadioGroup;
     RadioButton mLevelChooser;
     Button mStartGameButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class MenuGame extends AppCompatActivity {
         });
 
         //Record List Button
-        ImageButton recordBut = (ImageButton)findViewById(R.id.butRecordList);
+        ImageView recordBut = (ImageView)findViewById(R.id.butRecordList);
         recordBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
     private static final String TAG = "Main Game Activity";
     public final static String GAME_STATUS = "GAME_STATUS";
     private final static String GAME_TIME = "GAME_TIME";
+    public final static String GAME_LEVEL = "GAME_LEVEL";
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
@@ -228,6 +229,8 @@ public class MainActivity extends AppCompatActivity implements SensorServiceList
         Intent intent = new Intent(getBaseContext(), EndGame.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(GAME_STATUS, status);
+        intent.putExtra(GAME_TIME, mTimer.getBase());
+        intent.putExtra(GAME_LEVEL,mLevelString);
         startActivity(intent);
         this.finish();
     }

@@ -22,12 +22,22 @@
         android:layout_height="55dp"
         tools:ignore="MissingConstraints">
 
-        <ImageButton
+<!--        <ImageButton-->
+<!--            android:id="@+id/butRecordList"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:scaleType="fitXY"-->
+<!--            app:srcCompat="@drawable/goblet"/>-->
+
+        <ImageView
             android:id="@+id/butRecordList"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="left"
+            android:layout_height="40dp"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/goblet"/>
+            android:src="@drawable/goblet"/>
+
 
     </LinearLayout>
 
@@ -95,8 +105,8 @@
             android:layout_height="38dp"
             android:layout_alignTop="@id/radioGroup"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@color/play_button"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/buttonshape"
             android:minWidth="115dp"
             android:text="@string/but_start"
             android:textColor="#fff"

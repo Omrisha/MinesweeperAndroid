@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EndGame"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    android:id="@+id/container2">
 
 <!--    <ImageView-->
 <!--        android:src="@drawable/background"-->
@@ -68,7 +69,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:minWidth="100dp"
-            android:background="@color/play_button"
+            android:background="@drawable/buttonshape"
             android:textColor="#FFFF"
             android:text="@string/but_playAgain"
             tools:layout_editor_absoluteX="148dp"
@@ -81,7 +82,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:minWidth="100dp"
-            android:background="@color/exit_button"
+            android:background="@drawable/buttonshape"
+            android:backgroundTint="@color/exit_button"
             android:textColor="#FFFF"
             android:layout_marginBottom="-00dp"
             android:text="@string/but_exit"
