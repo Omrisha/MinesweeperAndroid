@@ -33,10 +33,11 @@ public class Game implements Serializable {
 
     public void handlePenalty(){
         List<Tile> revealedTiles = this.mBoard.getTilesByType(TileType.EMPTY, true);
-        Tile removed = revealedTiles.remove(revealedTiles.size() - 1);
-        int index = Board.find(this.mBoard.getmTiles(), removed);
-        this.mBoard.flipTile(index);
-        mBoard.setmMines(mBoard.getmMines()+1);
-
+        if (revealedTiles.size() > 0){
+            Tile removed = revealedTiles.remove(revealedTiles.size() - 1);
+            int index = Board.find(this.mBoard.getmTiles(), removed);
+            this.mBoard.flipTile(index);
+            mBoard.setmMines(mBoard.getmMines()+1);
+        }
     }
 }
