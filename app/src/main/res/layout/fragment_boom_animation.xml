@@ -9,28 +9,41 @@
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:paddingTop="60dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="60dp">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/title1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:paddingBottom="10dp"
-            android:text="You lose!"
+            android:text="@string/massage_BOOM"
             android:textColor="#000000"
             android:textSize="40dp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/title2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:text="@string/you_lose"
+            android:textColor="#000000"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
         <ImageView
 
+            android:id="@+id/boom"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            android:background="@drawable/boom_run"
-            android:id="@+id/boom" />
-
+            android:background="@drawable/boom_run" />
 
 
     </LinearLayout>

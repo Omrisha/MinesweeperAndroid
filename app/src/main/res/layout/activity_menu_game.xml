@@ -79,7 +79,7 @@
                 android:id="@+id/radio_Beginner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Choose_Beginner"
+                android:text="@string/Beginner"
                 android:textStyle="bold"
                 android:textSize="18sp" />
 
@@ -87,7 +87,7 @@
                 android:id="@+id/radio_Intermediate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Choose_Intermediate"
+                android:text="@string/Intermediate"
                 android:textStyle="bold"
                 android:textSize="18sp" />
 
@@ -95,7 +95,7 @@
                 android:id="@+id/radio_Expert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Choose_Expert"
+                android:text="@string/Expert"
                 android:textStyle="bold"
                 android:textSize="18sp" />
         </RadioGroup>
