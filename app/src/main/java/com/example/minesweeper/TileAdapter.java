@@ -50,7 +50,7 @@ public class TileAdapter extends BaseAdapter {
         LinearLayout.LayoutParams layoutParams = getLayoutParams(tileView);
         Tile tile = mBoard.chooseTile(position);
         if (tile.getmIsRevealed()) {
-            if (tile.getmType().equals(TileType.MINE) && !tile.getmIsFlagged()) {
+            if (tile.getmType().equals(TileType.MINE)) {
                 tileView.mTextView.setBackgroundResource(R.drawable.mine);
                 tileView.mTextView.setLayoutParams(layoutParams);
             } else {

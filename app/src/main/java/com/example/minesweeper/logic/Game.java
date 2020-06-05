@@ -23,7 +23,7 @@ public class Game implements Serializable {
                 break;
         }
     }
-
+//
     public Board getmBoard() {
         return mBoard;
     }
