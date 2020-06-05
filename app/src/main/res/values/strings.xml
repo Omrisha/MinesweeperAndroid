@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Minesweeper</string>
-    <string name="Choose_Beginner">Beginner</string>
-    <string name="Choose_Intermediate">Intermediate</string>
-    <string name="Choose_Expert">Expert</string>
+    <string name="Beginner">Beginner</string>
+    <string name="Intermediate">Intermediate</string>
+    <string name="Expert">Expert</string>
     <string name="textChoose">Choose difficulty:</string>
     <string name="but_start">start game!</string>
     <string name="you_won">you won!</string>
-    <string name="you_lost">you lost</string>
+    <string name="you_lose">you lose!</string>
     <string name="but_playAgain">play again!</string>
     <string name="but_exit">exit</string>
     <string name="record_list">Record List</string>
@@ -14,6 +14,9 @@
     <string name="massage_enter_name">Enter your name:</string>
     <string name="but_save">save</string>
     <string name="but_exit_fragment">X</string>
+    <string name="name">Name</string>
+    <string name="time">Time</string>
+    <string name="massage_BOOM">BOOOOOOM</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

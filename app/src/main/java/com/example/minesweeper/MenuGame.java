@@ -7,10 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.SurfaceControl;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,7 +25,6 @@ public class MenuGame extends AppCompatActivity {
     RadioGroup mLevelsRadioGroup;
     RadioButton mLevelChooser;
     Button mStartGameButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,5 +120,4 @@ public class MenuGame extends AppCompatActivity {
             }
         });
     }
-
 }

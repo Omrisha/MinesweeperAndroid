@@ -5,7 +5,8 @@
     android:layout_height="500dp"
     android:layout_marginTop="80dp"
     android:layout_gravity="center"
-    tools:context=".BreakRecordFragment">
+    tools:context=".BreakRecordFragment"
+    android:id="@+id/fragment1">
 
 
     <!-- TODO: Update blank fragment layout -->
@@ -19,7 +20,7 @@
         android:background="#FFFF">
 
         <ImageView
-            android:id="@+id/im1"
+            android:id="@+id/imT"
             android:layout_width="358dp"
             android:layout_height="161dp"
             android:layout_marginTop="10dp"

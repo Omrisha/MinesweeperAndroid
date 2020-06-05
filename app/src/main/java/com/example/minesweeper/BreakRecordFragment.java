@@ -10,8 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,7 +37,6 @@ public class BreakRecordFragment extends Fragment {
     public BreakRecordFragment() {
         // Required empty public constructor
     }
-
 
 
     public void saveData(String key) {
@@ -60,21 +63,46 @@ public class BreakRecordFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_break_record, container, false);
 
+        ImageView image = (ImageView)view.findViewById(R.id.imT);
+        playAmination(image);
+
         Button bSave = (Button) view.findViewById(R.id.bottomSaveRecord);
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("BUTTON", "save BUTTON PRESSED");
 
-                //TODO save RecordDetails (name)
-                saveData(myKey);
-                getFragmentManager().beginTransaction().remove(BreakRecordFragment.this).commit(); //exit from fragment
+                if(isEmpty(getView().findViewById(R.id.editTextName)) == true) {
+                    Toast.makeText(getActivity() , "Enter your name", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    saveData(myKey);
+                    getFragmentManager().beginTransaction().remove(BreakRecordFragment.this).commit(); //exit from fragment
+                }
             }
         });
+
+
+
 
         return view;
     }
 
+    private void playAmination(ImageView image) {
+        Animation animation = new AlphaAnimation(1, 0); //to change visibility from visible to invisible
+        animation.setDuration(1000); //1 second duration for each animation cycle
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE); //repeating indefinitely
+        animation.setRepeatMode(Animation.REVERSE); //animation will start from end point once ended.
+        image.startAnimation(animation); //to start animation
+    }
+    private boolean isEmpty(EditText etText) {
+        return etText.getText().toString().trim().length() == 0;
+    }
 
 
+
+    public void callParentMethod(){
+        getActivity().onBackPressed();
+    }
 }
