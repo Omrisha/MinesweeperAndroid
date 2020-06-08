@@ -34,6 +34,8 @@ public class Game implements Serializable {
         List<Tile> tiles = this.mBoard.getTilesExceptTileType(TileType.MINE);
         Random rand = new Random();
         int randomIdx = rand.nextInt(tiles.size()-1);
+        while (randomIdx < 0)
+            randomIdx = rand.nextInt(tiles.size()-1);
         Tile removed = tiles.remove(randomIdx);
         int index = Board.find(this.mBoard.getmTiles(), removed);
         this.mBoard.setMine(index);
@@ -44,6 +46,8 @@ public class Game implements Serializable {
         if (revealedTiles.size() > 0){
             Random rand = new Random();
             int randomIndex = rand.nextInt(revealedTiles.size()-1);
+            while (randomIndex < 0)
+                randomIndex = rand.nextInt(revealedTiles.size()-1);
             Tile removed = revealedTiles.remove(randomIndex);
             if (!removed.getmType().equals(TileType.EMPTY))
                 removed.setmType(TileType.EMPTY);
