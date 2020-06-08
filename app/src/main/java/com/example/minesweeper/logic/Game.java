@@ -30,6 +30,15 @@ public class Game implements Serializable {
 
     public void flagATile(int position) { this.mBoard.flagTile(position); }
 
+    private void setPenaltyMine(){
+        List<Tile> tiles = this.mBoard.getTilesExceptTileType(TileType.MINE);
+        Random rand = new Random();
+        int randomIdx = rand.nextInt(tiles.size()-1);
+        Tile removed = tiles.remove(randomIdx);
+        int index = Board.find(this.mBoard.getmTiles(), removed);
+        this.mBoard.setMine(index);
+    }
+
     public void handlePenalty(){
         List<Tile> revealedTiles = this.mBoard.getRevealedTileList();
         if (revealedTiles.size() > 0){
@@ -40,7 +49,7 @@ public class Game implements Serializable {
                 removed.setmType(TileType.EMPTY);
             int index = Board.find(this.mBoard.getmTiles(), removed);
             this.mBoard.flipTile(index);
-            mBoard.setmMines(mBoard.getmMines()+1);
+            setPenaltyMine();
         }
     }
 }

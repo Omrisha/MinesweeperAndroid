@@ -192,6 +192,22 @@ public class Board implements Serializable {
         return items;
     }
 
+    public List<Tile> getTilesExceptTileType(TileType tileType){
+        List<Tile> items = new ArrayList<>();
+        for (Tile tile: mTiles){
+            if (!tile.getmType().equals(tileType) && !tile.getmIsRevealed()){
+                items.add(tile);
+            }
+        }
+
+        return items;
+    }
+
+    public void setMine(int position){
+        this.mTiles[position].setmType(TileType.MINE);
+        this.mMines++;
+    }
+
     private boolean inRange(final int index) {
         if (index < 0 || index >= getCount()) {
             return false;
