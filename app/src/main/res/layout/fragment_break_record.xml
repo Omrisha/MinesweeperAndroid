@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="500dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="80dp"
-    android:layout_gravity="center"
+    android:layout_gravity="center_horizontal"
     tools:context=".BreakRecordFragment"
     android:id="@+id/fragment1">
 
@@ -51,6 +51,7 @@
             android:background="@drawable/buttonshape"
             android:backgroundTint="#D1CAC6"
             android:textColor="#f56e11"
+
             android:id="@+id/bottomSaveRecord"
             android:layout_gravity="center" />
 

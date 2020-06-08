@@ -3,6 +3,7 @@ package com.example.minesweeper;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.SystemClock;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.minesweeper.logic.Level;
 
 
@@ -23,14 +25,17 @@ public class EndGame extends AppCompatActivity {
     TextView mText;
     private String recordBreakKey;
 
-    public static final String SHARED_PREFS = "SharedPrefs";
-
+    private static final String SHARED_PREFS = "SharedPrefs";
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_game);
 
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         //  mText = (TextView) findViewById(R.id.textView);
         boolean status = getIntent().getBooleanExtra(MainActivity.GAME_STATUS, false);
@@ -38,7 +43,6 @@ public class EndGame extends AppCompatActivity {
         long time = (SystemClock.elapsedRealtime()) - (getIntent().getLongExtra(MainActivity.GAME_TIME, 10000));
         Log.d("TIME***********", time + "");
         String level = getIntent().getStringExtra(MainActivity.GAME_LEVEL);
-
 
 
         //String status = getIntent().getStringExtra(MainActivity.GAME_STATUS);
@@ -100,16 +104,13 @@ public class EndGame extends AppCompatActivity {
     }
 
 
-
     private String checkIfBreakRecord(String level, long time) {
         Log.d("INTO FUNC", level + " , " + time);
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         long time1 = -1, time2 = -1, time3 = -1;
         String name1 = "", name2 = "";
-
         Log.d("LEVEL", Level.BEGINNER.name());
 
+        //BEGINNER level
         if (level.toUpperCase().equals(Level.BEGINNER.name())) {
             time1 = sharedPreferences.getLong(Keys.BEGINNER_1_TIME.name(), -1);
             time2 = sharedPreferences.getLong(Keys.BEGINNER_2_TIME.name(), -1);
@@ -118,25 +119,56 @@ public class EndGame extends AppCompatActivity {
             name1 = sharedPreferences.getString(Keys.BEGINNER_1_NAME.name(), "null");
             name2 = sharedPreferences.getString(Keys.BEGINNER_2_NAME.name(), "null");
 
-            if(time1 == -1) {
+            if (time1 == -1)  /*if place1 is empty*/ {
+                //myTime to place1
                 editor.putLong(Keys.BEGINNER_1_TIME.name(), time);
                 editor.apply();
                 return Keys.BEGINNER_1_NAME.name();
-            }
+            } else if (time1 != -1 && time2 == -1)  /*if place2 is empty*/ {
+                if (time > time1) {
+                    //myTime to place2
+                    editor.putLong(Keys.BEGINNER_2_TIME.name(), time);
+                    editor.apply();
+                    return Keys.BEGINNER_2_NAME.name();
+                } else /*if (time<time1) -> swap */ {
+                    //place1 to place2
+                    editor.putLong(Keys.BEGINNER_2_TIME.name(), time1);
+                    editor.putString(Keys.BEGINNER_2_NAME.name(), name1);
 
-            else if (time1 != -1 && time2 == -1) {
-                editor.putLong(Keys.BEGINNER_2_TIME.name(), time);
-                editor.apply();
-                return Keys.BEGINNER_2_NAME.name();
-            }
+                    //myTime to place1
+                    editor.putLong(Keys.BEGINNER_1_TIME.name(), time);
+                    editor.apply();
+                    return Keys.BEGINNER_1_NAME.name();
+                }
+            } else if (time1 != -1 && time2 != -1 && time3 == -1) /*if place3 is empty*/ {
+                if ((time < time1) && (time < time2)) {
+                    //place2 to place3
+                    editor.putLong(Keys.BEGINNER_3_TIME.name(), time2);
+                    editor.putString(Keys.BEGINNER_3_NAME.name(), name2);
 
-            else if(time1 != -1 && time2 != -1 && time3 == -1) {
-                editor.putLong(Keys.BEGINNER_3_TIME.name(), time);
-                editor.apply();
-                return Keys.BEGINNER_3_NAME.name();
-            }
+                    //place1 to place2
+                    editor.putLong(Keys.BEGINNER_2_TIME.name(), time1);
+                    editor.putString(Keys.BEGINNER_2_NAME.name(), name1);
 
-            else if (time < time1) {
+                    //myTime to place1
+                    editor.putLong(Keys.BEGINNER_1_TIME.name(), time);
+                    editor.apply();
+                    return Keys.BEGINNER_1_NAME.name();
+                } else if ((time > time1) && (time < time2)) {
+                    //place2 to place3
+                    editor.putLong(Keys.BEGINNER_3_TIME.name(), time2);
+                    editor.putString(Keys.BEGINNER_3_NAME.name(), name2);
+
+                    //myTime to place2
+                    editor.putLong(Keys.BEGINNER_2_TIME.name(), time);
+                    editor.apply();
+                    return Keys.BEGINNER_2_NAME.name();
+                } else if ((time > time1) && (time > time2)) {
+                    editor.putLong(Keys.BEGINNER_3_TIME.name(), time);
+                    editor.apply();
+                    return Keys.BEGINNER_3_NAME.name();
+                }
+            } else if (time < time1) {
                 //place2 to place3
                 editor.putLong(Keys.BEGINNER_3_TIME.name(), time2);
                 editor.putString(Keys.BEGINNER_3_NAME.name(), name2);
@@ -145,26 +177,33 @@ public class EndGame extends AppCompatActivity {
                 editor.putLong(Keys.BEGINNER_2_TIME.name(), time1);
                 editor.putString(Keys.BEGINNER_2_NAME.name(), name1);
 
+                //myTime to place1
                 editor.putLong(Keys.BEGINNER_1_TIME.name(), time);
                 editor.apply();
                 return Keys.BEGINNER_1_NAME.name();
 
-            } else if (time < time2) {
+            } else if ((time < time2) && (time > time1)) {
                 //place2 to place3
                 editor.putLong(Keys.BEGINNER_3_TIME.name(), time2);
                 editor.putString(Keys.BEGINNER_3_NAME.name(), name2);
 
+                //myTime to place2
                 editor.putLong(Keys.BEGINNER_2_TIME.name(), time);
                 editor.apply();
                 return Keys.BEGINNER_2_NAME.name();
 
-            } else if (time < time3) {
+            } else if ((time < time3) && (time > time2) && (time > time1)) {
+                //myTime to place3
                 editor.putLong(Keys.BEGINNER_3_TIME.name(), time);
                 editor.apply();
                 return Keys.BEGINNER_3_NAME.name();
             }
+            return null;
+        }
 
-        } else if (level.equals(Level.INTERMEDIATE.name())) {
+        //INTERMEDIATE level
+        else if (level.equals(Level.INTERMEDIATE.name())) {
+
             time1 = sharedPreferences.getLong(Keys.INTERMEDIATE_1_TIME.name(), -1);
             time2 = sharedPreferences.getLong(Keys.INTERMEDIATE_2_TIME.name(), -1);
             time3 = sharedPreferences.getLong(Keys.INTERMEDIATE_3_TIME.name(), -1);
@@ -172,52 +211,93 @@ public class EndGame extends AppCompatActivity {
             name1 = sharedPreferences.getString(Keys.INTERMEDIATE_1_NAME.name(), "null");
             name2 = sharedPreferences.getString(Keys.INTERMEDIATE_2_NAME.name(), "null");
 
-            if(time1 == -1) {
+
+            if (time1 == -1)  /*if place1 is empty*/ {
+                //myTime to place1
                 editor.putLong(Keys.INTERMEDIATE_1_TIME.name(), time);
                 editor.apply();
                 return Keys.INTERMEDIATE_1_NAME.name();
-            }
+            } else if (time1 != -1 && time2 == -1)  /*if place2 is empty*/ {
+                if (time > time1) {
+                    //myTime to place2
+                    editor.putLong(Keys.INTERMEDIATE_2_TIME.name(), time);
+                    editor.apply();
+                    return Keys.INTERMEDIATE_2_NAME.name();
+                } else /*if (time<time1) -> swap */ {
+                    //place1 to place2
+                    editor.putLong(Keys.INTERMEDIATE_2_TIME.name(), time1);
+                    editor.putString(Keys.INTERMEDIATE_2_NAME.name(), name1);
 
-            else if (time1 != -1 && time2 == -1) {
-                editor.putLong(Keys.INTERMEDIATE_2_TIME.name(), time);
-                editor.apply();
-                return Keys.INTERMEDIATE_2_NAME.name();
-            }
+                    //myTime to place1
+                    editor.putLong(Keys.INTERMEDIATE_1_TIME.name(), time);
+                    editor.apply();
+                    return Keys.INTERMEDIATE_1_NAME.name();
+                }
 
-            else if(time1 != -1 && time2 != -1 && time3 == -1) {
-                editor.putLong(Keys.INTERMEDIATE_3_TIME.name(), time);
-                editor.apply();
-                return Keys.INTERMEDIATE_3_NAME.name();
-            }
+            } else if (time1 != -1 && time2 != -1 && time3 == -1) /*if place3 is empty*/ {
+                if ((time < time1) && (time < time2)) {
+                    //place2 to place3
+                    editor.putLong(Keys.INTERMEDIATE_3_TIME.name(), time2);
+                    editor.putString(Keys.INTERMEDIATE_3_NAME.name(), name2);
 
-            else if (time < time1 || time1 == -1) {
+                    //place1 to place2
+                    editor.putLong(Keys.INTERMEDIATE_2_TIME.name(), time1);
+                    editor.putString(Keys.INTERMEDIATE_2_NAME.name(), name1);
+
+                    //myTime to place1
+                    editor.putLong(Keys.INTERMEDIATE_1_TIME.name(), time);
+                    editor.apply();
+                    return Keys.INTERMEDIATE_1_NAME.name();
+                } else if ((time > time1) && (time < time2)) {
+                    //place2 to place3
+                    editor.putLong(Keys.INTERMEDIATE_3_TIME.name(), time2);
+                    editor.putString(Keys.INTERMEDIATE_3_NAME.name(), name2);
+
+                    //myTime to place2
+                    editor.putLong(Keys.INTERMEDIATE_2_TIME.name(), time);
+                    editor.apply();
+                    return Keys.INTERMEDIATE_2_NAME.name();
+                } else if ((time > time1) && (time > time2)) {
+                    editor.putLong(Keys.INTERMEDIATE_3_TIME.name(), time);
+                    editor.apply();
+                    return Keys.INTERMEDIATE_3_NAME.name();
+                }
+
+            } else if (time < time1) {
                 //place2 to place3
                 editor.putLong(Keys.INTERMEDIATE_3_TIME.name(), time2);
                 editor.putString(Keys.INTERMEDIATE_3_NAME.name(), name2);
+
                 //place1 to place2
                 editor.putLong(Keys.INTERMEDIATE_2_TIME.name(), time1);
                 editor.putString(Keys.INTERMEDIATE_2_NAME.name(), name1);
 
+                //myTime to place1
                 editor.putLong(Keys.INTERMEDIATE_1_TIME.name(), time);
                 editor.apply();
                 return Keys.INTERMEDIATE_1_NAME.name();
 
-            } else if (time < time2 || time2 == -1) {
+            } else if ((time < time2) && (time > time1)) {
                 //place2 to place3
                 editor.putLong(Keys.INTERMEDIATE_3_TIME.name(), time2);
                 editor.putString(Keys.INTERMEDIATE_3_NAME.name(), name2);
 
+                //myTime to place2
                 editor.putLong(Keys.INTERMEDIATE_2_TIME.name(), time);
                 editor.apply();
                 return Keys.INTERMEDIATE_2_NAME.name();
 
-            } else if (time < time3 || time3 == -1) {
+            } else if ((time < time3) && (time > time2) && (time > time1)) {
+                //myTime to place3
                 editor.putLong(Keys.INTERMEDIATE_3_TIME.name(), time);
                 editor.apply();
                 return Keys.INTERMEDIATE_3_NAME.name();
             }
 
-        } else {
+        }
+
+        //EXPERT level
+        else {
             time1 = sharedPreferences.getLong(Keys.EXPERT_1_TIME.name(), -1);
             time2 = sharedPreferences.getLong(Keys.EXPERT_2_TIME.name(), -1);
             time3 = sharedPreferences.getLong(Keys.EXPERT_3_TIME.name(), -1);
@@ -225,53 +305,90 @@ public class EndGame extends AppCompatActivity {
             name1 = sharedPreferences.getString(Keys.EXPERT_1_NAME.name(), "null");
             name2 = sharedPreferences.getString(Keys.EXPERT_2_NAME.name(), "null");
 
-            if(time1 == -1) {
+            if (time1 == -1)  /*if place1 is empty*/ {
+                //myTime to place1
                 editor.putLong(Keys.EXPERT_1_TIME.name(), time);
                 editor.apply();
                 return Keys.EXPERT_1_NAME.name();
-            }
+            } else if (time1 != -1 && time2 == -1)  /*if place2 is empty*/ {
+                if (time > time1) {
+                    //myTime to place2
+                    editor.putLong(Keys.EXPERT_2_TIME.name(), time);
+                    editor.apply();
+                    return Keys.EXPERT_2_NAME.name();
+                } else /*if (time<time1) -> swap */ {
+                    //place1 to place2
+                    editor.putLong(Keys.EXPERT_2_TIME.name(), time1);
+                    editor.putString(Keys.EXPERT_2_NAME.name(), name1);
 
-            else if (time1 != -1 && time2 == -1) {
-                editor.putLong(Keys.EXPERT_2_TIME.name(), time);
-                editor.apply();
-                return Keys.EXPERT_2_NAME.name();
-            }
+                    //myTime to place1
+                    editor.putLong(Keys.EXPERT_1_TIME.name(), time);
+                    editor.apply();
+                    return Keys.EXPERT_1_NAME.name();
+                }
+            } else if (time1 != -1 && time2 != -1 && time3 == -1) /*if place3 is empty*/ {
+                if ((time < time1) && (time < time2)) {
+                    //place2 to place3
+                    editor.putLong(Keys.EXPERT_3_TIME.name(), time2);
+                    editor.putString(Keys.EXPERT_3_NAME.name(), name2);
 
-            else if(time1 != -1 && time2 != -1 && time3 == -1) {
-                editor.putLong(Keys.EXPERT_3_TIME.name(), time);
-                editor.apply();
-                return Keys.EXPERT_3_NAME.name();
-            }
+                    //place1 to place2
+                    editor.putLong(Keys.EXPERT_2_TIME.name(), time1);
+                    editor.putString(Keys.EXPERT_2_NAME.name(), name1);
 
-            else if (time < time1 || time1 == -1) {
+                    //myTime to place1
+                    editor.putLong(Keys.EXPERT_1_TIME.name(), time);
+                    editor.apply();
+                    return Keys.EXPERT_1_NAME.name();
+                } else if ((time > time1) && (time < time2)) {
+                    //place2 to place3
+                    editor.putLong(Keys.EXPERT_3_TIME.name(), time2);
+                    editor.putString(Keys.EXPERT_3_NAME.name(), name2);
+
+                    //myTime to place2
+                    editor.putLong(Keys.EXPERT_2_TIME.name(), time);
+                    editor.apply();
+                    return Keys.EXPERT_2_NAME.name();
+                } else if ((time > time1) && (time > time2)) {
+                    editor.putLong(Keys.EXPERT_3_TIME.name(), time);
+                    editor.apply();
+                    return Keys.EXPERT_3_NAME.name();
+                }
+            } else if (time < time1) {
                 //place2 to place3
                 editor.putLong(Keys.EXPERT_3_TIME.name(), time2);
                 editor.putString(Keys.EXPERT_3_NAME.name(), name2);
+
                 //place1 to place2
                 editor.putLong(Keys.EXPERT_2_TIME.name(), time1);
                 editor.putString(Keys.EXPERT_2_NAME.name(), name1);
 
+                //myTime to place1
                 editor.putLong(Keys.EXPERT_1_TIME.name(), time);
                 editor.apply();
                 return Keys.EXPERT_1_NAME.name();
 
-            } else if (time < time2 || time2 == -1) {
+            } else if ((time < time2) && (time > time1)) {
                 //place2 to place3
                 editor.putLong(Keys.EXPERT_3_TIME.name(), time2);
                 editor.putString(Keys.EXPERT_3_NAME.name(), name2);
 
+                //myTime to place2
                 editor.putLong(Keys.EXPERT_2_TIME.name(), time);
                 editor.apply();
                 return Keys.EXPERT_2_NAME.name();
 
-            } else if (time < time3 || time3 == -1) {
+            } else if ((time < time3) && (time > time2) && (time > time1)) {
+                //myTime to place3
                 editor.putLong(Keys.EXPERT_3_TIME.name(), time);
                 editor.apply();
                 return Keys.EXPERT_3_NAME.name();
             }
         }
+
         return null;
     }
+
 
     @Override
     public void onBackPressed() {

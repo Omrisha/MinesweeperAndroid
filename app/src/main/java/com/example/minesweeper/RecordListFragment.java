@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class RecordListFragment extends Fragment {
 
-    public static final String SHARED_PREFS = "SharedPrefs";
+    private final String SHARED_PREFS = "SharedPrefs";
 
 
     public RecordListFragment() {
